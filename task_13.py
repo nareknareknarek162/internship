@@ -2,13 +2,16 @@ import time
 
 
 def cached(max_size=None, seconds=None):
+    max_size = None if not isinstance(max_size, int) else max_size
+    seconds = None if not isinstance(max_size, int) else seconds
     def real_cache(func):
         calculated = {}
         def wrapper(*args, **kwargs):
             nonlocal calculated
-            calculated = {i[0]: i[1] for i in list(calculated.items()) if time.time() - i[1][1] < seconds}
+            calculated = {i[0]: i[1] for i in list(calculated.items()) if time.time() - i[1][1] < seconds} \
+                if seconds is not None else calculated
             if args not in calculated:
-                if len(calculated) > max_size:
+                if max_size is not None and len(calculated) > max_size:
                     calculated = dict(list(calculated.items())[1:]) # Это будет работать только в python 3.7+
                 calculated[args] = (func(*args, **kwargs), time.time())
             return calculated[args][0]
@@ -16,7 +19,7 @@ def cached(max_size=None, seconds=None):
     return real_cache
 
 
-@cached(4, 10)
+@cached(max_size=4,seconds=10)
 def slow_function(x):
     print(f"Вычисляю для {x}...")
     return x ** 2
@@ -35,7 +38,7 @@ print(slow_function(3))
 print(slow_function(5))
 '''
 
-
+'''
 #seconds test
 # Первый вызов — вычисляется
 print(slow_function(2)) # Вывод: "Вычисляю для 2..." → 4
@@ -47,4 +50,5 @@ print(slow_function(2))
 # Вывод: "Вычисляю для 2..." → 4
 time.sleep(3)
 print(slow_function(2)) # 4
+'''
 
