@@ -2,7 +2,7 @@ from functools import reduce
 
 
 def multiply_numbers(inputs=None):
-    return None if inputs is None \
+    return None if inputs is None or not any(i.isdigit() for i in str(inputs))\
         else reduce(lambda x, y: x * y, map(int, filter(lambda x: x in '0123456789', str(inputs))), 1)
 
 

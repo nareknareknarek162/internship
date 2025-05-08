@@ -3,7 +3,7 @@ import time
 
 def cached(max_size=None, seconds=None):
     max_size = None if not isinstance(max_size, int) else max_size
-    seconds = None if not isinstance(max_size, int) else seconds
+    seconds = None if not isinstance(seconds, int) else seconds
     def real_cache(func):
         calculated = {}
         def wrapper(*args, **kwargs):
@@ -18,11 +18,13 @@ def cached(max_size=None, seconds=None):
         return wrapper
     return real_cache
 
-
-@cached(max_size=4,seconds=10)
+''''
+@cached(None, 2)
 def slow_function(x):
     print(f"Вычисляю для {x}...")
     return x ** 2
+
+'''
 
 '''
 #size tests
@@ -52,3 +54,8 @@ time.sleep(3)
 print(slow_function(2)) # 4
 '''
 
+'''
+print(slow_function(5))
+time.sleep(2)
+print(slow_function(5))
+'''

@@ -1,7 +1,7 @@
-from task_11 import Desserts
+from task_11 import Dessert
 
 
-class JellyBean(Desserts):
+class JellyBean(Dessert):
     def __init__(self, name=None, calories=None, flavour=None):
         super().__init__(name, calories)
         self._flavour = flavour
