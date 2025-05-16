@@ -17,10 +17,7 @@ class Dessert:
 
     @calories.setter
     def calories(self, new_calories):
-        if isinstance(new_calories, (int, float)):
-            self._calories = new_calories
-        else:
-            raise TypeError('Введите числовое значение калорийности')
+        self._calories = new_calories
 
     def is_healthy(self):
         if self._calories < 200:
